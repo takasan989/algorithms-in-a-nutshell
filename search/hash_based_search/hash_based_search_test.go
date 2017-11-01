@@ -4,13 +4,35 @@ import (
 	"testing"
 )
 
-func TestCreateTable(t *testing.T) {
-	tableSize := 6
-	table := createTable(tableSize, []int{5, 2, 1, 4, 3})
+func TestSearch(t *testing.T) {
+	data := []int{9, 24, 71, 31, 43, 32, 21, 64, 89, 57, 0, 78, 36, 61, 74, 97, 19, 6, 60, 76}
+	table := loadTable(data)
+	exists := Search(table, 57)
 
-	if len(table) != tableSize {
-		t.Errorf("CreateTable size %d", len(table))
+	if !exists {
+		t.Errorf("Search #1 %v", data)
 	}
+
+	notExists := Search(table, 100)
+
+	if notExists {
+		t.Errorf("Search #2 %v", data)
+	}
+}
+
+func TestLoadTable(t *testing.T) {
+	data := []int{5, 2, 1, 4, 3, 0}
+	table := loadTable(data)
+
+	for _, list := range table {
+		if len(list) != 1 {
+			t.Errorf("loadTable list size %d", len(list))
+		}
+	}
+}
+
+func TestCreateTable(t *testing.T) {
+	table := createTable()
 
 	for _, list := range table {
 		if len(list) != 0 {
@@ -20,11 +42,10 @@ func TestCreateTable(t *testing.T) {
 }
 
 func TestHash(t *testing.T) {
-	tableSize := 6
 	value := 123
 	expected := 3
 
-	actual := hash(tableSize, value)
+	actual := hash(value)
 
 	if actual != expected {
 		t.Errorf("hash #1 %d", actual)
