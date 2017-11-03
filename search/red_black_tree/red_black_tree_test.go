@@ -4,6 +4,17 @@ import (
 	"testing"
 )
 
+func TestAppennd(t *testing.T) {
+	tree := &Tree{}
+	data := []int{43,26,25,17,16,15,13}
+	
+	for _, v := range data {
+		tree.Append(v)
+	}
+	
+	t.Errorf("%s", tree.StringDetail())
+}
+
 func TestBalance(t *testing.T) {
 	tree := &Tree{}
 	
@@ -11,7 +22,9 @@ func TestBalance(t *testing.T) {
 		tree.Append(i)
 	}
 	
-	t.Errorf("%v", tree)
+	actual := tree.StringDetail()
+	
+	t.Errorf("%s", actual)
 }
 
 func TestBalanceCase2(t *testing.T) {
@@ -80,20 +93,6 @@ func TestRotateRight(t *testing.T) {
 	
 	if actual != expected {
 		t.Errorf("rotateRight %v", actual)
-	}
-}
-
-func TestString(t *testing.T) {
-	tree := NewTree()
-	tree.Append(2)
-	tree.Append(1)
-	tree.Append(3)
-	
-	actual := tree.String()
-	expected := "Tree{Node{2,left: Node{1},right: Node{3}}}"
-	
-	if actual != expected {
-		t.Errorf("String %s", actual)
 	}
 }
 

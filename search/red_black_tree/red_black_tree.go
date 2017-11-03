@@ -24,6 +24,31 @@ type Node struct {
 	value  int
 }
 
+func Search(tree *Tree, value int) bool {
+	if tree.root == nil {
+		return false
+	}
+	return search(tree.root, value)
+}
+
+func search(node *Node, value int) bool {
+    if value == node.value {
+        return true
+    }
+    
+    if value < node.value {
+        if node.left == nil {
+            return false
+        }
+        return search(node.left, value)
+    }
+    
+    if node.right == nil {
+        return false
+    }
+    return search(node.right, value)
+}
+
 func NewTree() *Tree {
 	tree := Tree{}
 	return &tree
@@ -68,7 +93,7 @@ func (node *Node) balance() {
 		return
 	}
 	
-	if uncle.color == RED {
+	if uncle != nil && uncle.color == RED {
 		node.balanceCase2()
 		return
 	}
@@ -139,7 +164,8 @@ func (tree *Tree) Append(value int) {
 		return
 	}
 	
-	tree.root.append(&Node{value: value, color: RED})
+	node := tree.root.append(&Node{value: value, color: RED})
+	node.balance()
 }
 
 func (tree *Tree) append(node *Node) *Node {
@@ -176,6 +202,7 @@ func (parent *Node) append(node *Node) *Node {
 		}
 		parent.left = node
 		node.parent = parent
+		node.balance()
 		return node
 	}
 	
@@ -185,6 +212,7 @@ func (parent *Node) append(node *Node) *Node {
 	
 	parent.right = node
 	node.parent = parent
+	node.balance()
 	return node
 }
 
@@ -276,4 +304,29 @@ func (node *Node) String() string {
 	}
 	
 	return fmt.Sprintf("Node{%d%s%s}", value, left, right)
+}
+
+func (tree *Tree) StringDetail() string {
+	return fmt.Sprintf("Tree{%s}", tree.root.StringDetail())
+}
+
+func (node *Node) StringDetail() string {
+	value := node.value
+	
+	color := "B"
+	if node.color == RED {
+		color = "R"
+	}
+	
+	left := ""
+	if node.left != nil {
+		left = fmt.Sprintf(",left: %s", node.left.StringDetail())
+	}
+	
+	right := ""
+	if node.right != nil {
+		right = fmt.Sprintf(",right: %s", node.right.StringDetail())
+	}
+	
+	return fmt.Sprintf("Node{%s%d%s%s}", color, value, left, right)
 }
