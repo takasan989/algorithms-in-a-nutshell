@@ -1,5 +1,19 @@
 package depth_first_search
 
+func Search(graph [][]int, s int) []bool {
+	pred := make([]int, len(graph))
+	visited := make([]bool, len(graph))
+
+	visit(graph, visited, pred, s)
+
+	for v, _ := range graph {
+		if !visited[v] {
+			visit(graph, visited, pred, v)
+		}
+	}
+	return visited
+}
+
 func visit(graph [][]int, visited []bool, pred []int, v int) {
 	visited[v] = true
 

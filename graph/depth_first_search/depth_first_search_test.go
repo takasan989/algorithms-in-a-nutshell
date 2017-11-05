@@ -5,9 +5,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestVisit(t *testing.T) {
-	assert := assert.New(t)
-
+func graph() [][]int {
 	graph := [][]int {
 		{0,1,0,0,1,0,0,0,0},
 		{1,0,1,0,0,0,0,0,0},
@@ -19,6 +17,24 @@ func TestVisit(t *testing.T) {
 		{0,0,0,0,0,0,0,0,1},
 		{0,0,0,0,0,0,0,1,0},
 	}
+	return graph
+}
+
+func TestSearch(t *testing.T) {
+	assert := assert.New(t)
+	graph := graph()
+
+	visited := Search(graph, 0)
+
+	for _, r := range visited {
+		assert.True(r)
+	}
+}
+
+func TestVisit(t *testing.T) {
+	assert := assert.New(t)
+	graph := graph()
+
 	visited := make([]bool, 9)
 	pred := make([]int, 9)
 
@@ -31,17 +47,7 @@ func TestVisit(t *testing.T) {
 func TestNeighbors(t *testing.T) {
 	assert := assert.New(t)
 
-	graph := [][]int {
-		{0,1,0,0,1,0,0,0,0},
-		{1,0,1,0,0,0,0,0,0},
-		{0,1,0,1,0,0,1,0,0},
-		{0,0,1,0,1,0,0,0,0},
-		{1,0,0,1,0,1,0,0,0},
-		{0,0,0,0,1,0,0,0,0},
-		{0,0,1,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,1,0},
-		{0,0,0,0,0,0,0,0,1},
-	}
+	graph := graph()
 
 	neighbors := neighbors(graph, 2)
 
