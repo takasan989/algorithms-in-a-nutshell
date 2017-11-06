@@ -4,29 +4,6 @@ import (
 	"testing"
 )
 
-func TestAppennd(t *testing.T) {
-	tree := &Tree{}
-	data := []int{43,26,25,17,16,15,13}
-	
-	for _, v := range data {
-		tree.Append(v)
-	}
-	
-	t.Errorf("%s", tree.StringDetail())
-}
-
-func TestBalance(t *testing.T) {
-	tree := &Tree{}
-	
-	for i := 10; i > 0; i-- {
-		tree.Append(i)
-	}
-	
-	actual := tree.StringDetail()
-	
-	t.Errorf("%s", actual)
-}
-
 func TestBalanceCase2(t *testing.T) {
 	tree := &Tree{}
 	g := tree.append(&Node{value:100, color: BLACK})
