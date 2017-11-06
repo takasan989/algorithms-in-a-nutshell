@@ -54,6 +54,21 @@ func dequeue(queue []int) ([]int, int) {
 	return queue[1:], queue[0]
 }
 
+func dequeue_min(queue []int, dist []int) ([]int, int) {
+	min := math.MaxInt32
+	result := 0
+
+	for i := 0; i < len(queue); i++ {
+		d := dist[queue[i]]
+
+		if d < min {
+			min = d
+			result = queue[i]
+		}
+	}
+	return append(queue[:result], queue[result+1:]...), result
+}
+
 func neighbors(graph [][]int, v int) []int {
 	result := []int{}
 
